@@ -9,8 +9,8 @@ export default async function Home() {
     <>
       <Image      
         src="/images/hero.jpg"
-        width={880}
-        height={360}
+        width={1100}
+        height={420}
         alt="Picture of the author"
       />
       <p className="mt-2">とあるエンジニアの備忘録です。</p>

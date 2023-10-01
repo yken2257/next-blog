@@ -44,7 +44,18 @@ export default async function Page({ params }: { params: { slug: string } }) {
           <FormattedDate dateString={postData.date} />
         </div>
         <hr className="mb-4"/>
-        {processor.processSync(postData.contentHtml).result}
+        {/* {processor.processSync(postData.contentHtml).result} */}
+        <div className="grid grid-cols-12">
+          <div className="col-span-9">
+            {processor.processSync(postData.contentHtml).result}
+          </div>
+          <div className="col-span-3">
+            <div
+              className="sticky top-[50px]"
+              dangerouslySetInnerHTML={{ __html: postData.toc }}
+            ></div>
+          </div>
+        </div>
       </article>
     </>
   )

@@ -9,7 +9,11 @@ import remarkMath from 'remark-math';
 import rehypeHighlight from 'rehype-highlight';
 import rehypeStringify from 'rehype-stringify';
 import rehypeKatex from 'rehype-katex';
+import rehypeSlug from 'rehype-slug';
+import remarkToc from 'remark-toc';
+import { toc, Options } from 'mdast-util-toc';
 import { PostMetaData, MatterData, PostData } from './types';
+import { Root } from 'mdast';
 
 const postsDirectory = path.join(process.cwd(), 'posts');
 
@@ -70,6 +74,16 @@ export async function getPostMetaData(slug: string): Promise<MatterData> {
   };
 }
 
+const getToc = (options: Options) => {
+  return (tree: any) => {
+    const result = toc(tree, options);
+
+    tree.children = [
+      result.map,
+    ]
+  };
+};
+
 export async function getPostData(slug: string): Promise<PostData> {
   const fullPath = path.join(postsDirectory, `${slug}.md`);
   const fileContents = fs.readFileSync(fullPath, 'utf8');
@@ -80,18 +94,30 @@ export async function getPostData(slug: string): Promise<PostData> {
   // Use remark to convert markdown into HTML string
   const processedContent = await unified()
     .use(remarkParse)
+    .use(remarkToc)
     .use(remarkMath)
     .use(remarkGfm)
     .use(remarkRehype)
     .use(rehypeKatex)
     .use(rehypeHighlight)
+    .use(rehypeSlug)
     .use(rehypeStringify)
     .process(matterResult.content);
   const contentHtml = processedContent.toString();
 
+  const toc = await unified()
+  .use(remarkParse)
+  .use(getToc, {
+    tight: true,
+  })
+  .use(remarkRehype)
+  .use(rehypeStringify)
+  .process(matterResult.content);
+
   // Combine the data with the id
   return {
     contentHtml,
+    toc: toc.toString(),
     ...matterResult.data,
   };
 }

@@ -5,6 +5,8 @@ date: "2023-06-10"
 updatedDate: "June 12 2023"
 ---
 
+## Table of Contents
+
 Cloudflareが公式に公開している「[Cloudflare Pages GitHub Action](https://github.com/cloudflare/pages-action)」というGitHub Actionsを使って、プッシュするごとにGitHub Actions経由でCloudflare Pagesにデプロイする手順をまとめます。
 基本的にはCloudflare公式ページに記載されている手順に従って進めます。以下のどちらでもOKです。
 - https://github.com/cloudflare/pages-action

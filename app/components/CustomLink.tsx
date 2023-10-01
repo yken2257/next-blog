@@ -7,9 +7,9 @@ const CustomLink = ({
   children: string;
   href: string;
 }): JSX.Element =>
-  href.startsWith('/') || href === '' ? (
+  (href.startsWith('/') || href.startsWith('#') || href === '') ? (
     <Link href={href}>
-      <a>{children}</a>
+      {children}
     </Link>
   ) : (
     <a href={href} target="_blank" rel="noopener noreferrer">

@@ -84,7 +84,7 @@ ul > li > ul > li > ul {
 @layer base {
 	body {
 		@apply p-5 leading-6 m-auto text-left break-words;
-		max-width: 80ch;
+		max-width: 100ch;
 		/* margin: auto; */
 	}
 	h1 {
