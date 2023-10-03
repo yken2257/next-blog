@@ -8,7 +8,7 @@ import { PostData } from "@/utils/types";
 import CustomLink from '@/app/components/CustomLink';
 import FormattedDate from '@/app/components/FormattedDate';
 import { FaRegClock } from 'react-icons/fa6';
-
+import TOC from '@/app/components/toc';
 
 export async function generateMetadata(
   { params }: { params: { slug: string } }
@@ -35,28 +35,24 @@ export default async function Page({ params }: { params: { slug: string } }) {
 
   return (
     <>
-      <article>
-        <h1>
-          {postData.title}
-        </h1>
-        <div className="text-gray-500 text-base mb-2 flex items-center">
-          <FaRegClock className="mr-1"/>
-          <FormattedDate dateString={postData.date} />
+      <h1>
+        {postData.title}
+      </h1>
+      <div className="text-gray-500 text-base mb-2 flex items-center">
+        <FaRegClock className="mr-1"/>
+        <FormattedDate dateString={postData.date} />
+      </div>
+      <hr className="mb-4"/>
+      <div className="grid grid-cols-12">
+        <div className="col-span-9">
+          {processor.processSync(postData.contentHtml).result}
         </div>
-        <hr className="mb-4"/>
-        {/* {processor.processSync(postData.contentHtml).result} */}
-        <div className="grid grid-cols-12">
-          <div className="col-span-9">
-            {processor.processSync(postData.contentHtml).result}
-          </div>
-          <div className="col-span-3">
-            <div
-              className="sticky top-[50px]"
-              dangerouslySetInnerHTML={{ __html: postData.toc }}
-            ></div>
+        <div className="col-span-3">
+          <div className="sticky top-[50px] text-sm ml-4 space-y-1">
+            <TOC headings={postData.headings} />
           </div>
         </div>
-      </article>
+      </div>
     </>
   )
 }

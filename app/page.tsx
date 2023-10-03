@@ -11,6 +11,7 @@ export default async function Home() {
         src="/images/hero.jpg"
         width={1100}
         height={420}
+        priority={true}
         alt="Picture of the author"
       />
       <p className="mt-2">とあるエンジニアの備忘録です。</p>

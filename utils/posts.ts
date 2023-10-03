@@ -11,9 +11,10 @@ import rehypeStringify from 'rehype-stringify';
 import rehypeKatex from 'rehype-katex';
 import rehypeSlug from 'rehype-slug';
 import remarkToc from 'remark-toc';
-import { toc, Options } from 'mdast-util-toc';
+// import { toc, Options } from 'mdast-util-toc';
 import { PostMetaData, MatterData, PostData } from './types';
-import { Root } from 'mdast';
+import { fromMarkdown } from 'mdast-util-from-markdown';
+import Slugger from 'github-slugger'
 
 const postsDirectory = path.join(process.cwd(), 'posts');
 
@@ -74,15 +75,16 @@ export async function getPostMetaData(slug: string): Promise<MatterData> {
   };
 }
 
-const getToc = (options: Options) => {
-  return (tree: any) => {
-    const result = toc(tree, options);
+// Remark plugin to extract TOC headings
+// const getToc = (options: Options) => {
+//   return (tree: any) => {
+//     const result = toc(tree, options);
 
-    tree.children = [
-      result.map,
-    ]
-  };
-};
+//     tree.children = [
+//       result.map,
+//     ]
+//   };
+// };
 
 export async function getPostData(slug: string): Promise<PostData> {
   const fullPath = path.join(postsDirectory, `${slug}.md`);
@@ -105,19 +107,44 @@ export async function getPostData(slug: string): Promise<PostData> {
     .process(matterResult.content);
   const contentHtml = processedContent.toString();
 
-  const toc = await unified()
-  .use(remarkParse)
-  .use(getToc, {
-    tight: true,
-  })
-  .use(remarkRehype)
-  .use(rehypeStringify)
-  .process(matterResult.content);
+  // Generate TOC html string
+  // const toc = await unified()
+  //   .use(remarkParse)
+  //   .use(getToc, {
+  //     tight: true,
+  //   })
+  //   .use(remarkRehype)
+  //   .use(rehypeStringify)
+  //   .process(matterResult.content);
+  // const tocString = toc.toString()
 
+  const slugger = new Slugger();
+  const extractHeadings: any = (node: any) => {
+    const headings = [];
+  
+    if (node.type === 'heading') {
+      const value = node.children[0].value;
+      const depth = node.depth;
+      const id = slugger.slug(value);
+      headings.push({ id, value, depth });
+    }
+  
+    if (node.children) {
+      for (let child of node.children) {
+        headings.push(...extractHeadings(child));
+      }
+    }
+  
+    return headings;  
+  };
+
+  const markdownTree = fromMarkdown(matterResult.content);
+  const headings = extractHeadings(markdownTree)
+  
   // Combine the data with the id
   return {
     contentHtml,
-    toc: toc.toString(),
+    headings,
     ...matterResult.data,
   };
 }
