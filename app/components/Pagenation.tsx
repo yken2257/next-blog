@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-const Pagination = ({ maxPageNum, currentPageNum = 1 }) => {
+const Pagination = ({ maxPageNum, currentPageNum = 1 }: {maxPageNum: number, currentPageNum: number}) => {
   const pageNumArray = Array.from({ length: maxPageNum }, (_, i) => i + 1);
 
   return (
