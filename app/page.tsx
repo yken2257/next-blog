@@ -1,9 +1,11 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import { getSortedPostsData } from '@/utils/posts'
 import PostCard from './components/PostsCard';
 
 export default async function Home() {
   const allPostsData = await getSortedPostsData();
+  const postsOnTop = allPostsData.slice(0,3);
 
   return (
     <>
@@ -16,9 +18,15 @@ export default async function Home() {
       />
       <p className="mt-2">とあるエンジニアの備忘録です。</p>
       <h2>Posts</h2>
-      {allPostsData.map(({slug, date, title}) => (
+      {postsOnTop.map(({slug, date, title}) => (
         <PostCard key={slug} title={title} slug={slug} date={date}/>
       ))}
+      <Link 
+        href="/pages/1"
+        className="text-gray-900 hover:underline"
+        >
+          More
+      </Link>
     </>
   )
 }

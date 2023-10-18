@@ -57,7 +57,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
   )
 }
 
-export async function generateStaticParams() {
-  const paths = getAllPostIds();
-  return paths
-}
+// export async function generateStaticParams() {
+//   const paths = getAllPostIds();
+//   return paths
+// }
