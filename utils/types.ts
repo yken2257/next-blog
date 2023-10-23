@@ -13,4 +13,5 @@ export type PostMetaData = {
 // getPostData の戻り値
 export type PostData = {
   contentHtml: string;
+  contentText?: string;
 } & MatterData;

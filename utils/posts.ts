@@ -14,6 +14,7 @@ import remarkToc from 'remark-toc';
 // import { toc, Options } from 'mdast-util-toc';
 import { PostMetaData, MatterData, PostData } from './types';
 import { fromMarkdown } from 'mdast-util-from-markdown';
+import removeMarkdown from 'remove-markdown'
 import Slugger from 'github-slugger'
 
 const postsDirectory = path.join(process.cwd(), 'posts');
@@ -107,6 +108,9 @@ export async function getPostData(slug: string): Promise<PostData> {
     .process(matterResult.content);
   const contentHtml = processedContent.toString();
 
+  const rawText = removeMarkdown(matterResult.content);
+  const contentText = rawText.replace(/[\n\t]/g, ' ');
+
   // Generate TOC html string
   // const toc = await unified()
   //   .use(remarkParse)
@@ -145,6 +149,7 @@ export async function getPostData(slug: string): Promise<PostData> {
   return {
     contentHtml,
     headings,
+    contentText,
     ...matterResult.data,
   };
 }
