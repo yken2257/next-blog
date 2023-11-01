@@ -29,6 +29,12 @@ const processor = unified()
   // @ts-ignore
   .use(rehypeReact, {...production, components: { a: CustomLink, }});
 
+export async function generateStaticParams() {
+  return getAllPostIds();
+}
+
+export const dynamicParams = false
+
 export default async function Page({ params }: { params: { slug: string } }) {
   const { slug } = params;
   const postData: PostData = await getPostData(slug);
@@ -57,7 +63,3 @@ export default async function Page({ params }: { params: { slug: string } }) {
   )
 }
 
-// export async function generateStaticParams() {
-//   const paths = getAllPostIds();
-//   return paths
-// }

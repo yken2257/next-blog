@@ -52,13 +52,9 @@ export function getSortedPostsData() {
 export function getAllPostIds() {
   const fileNames = fs.readdirSync(postsDirectory);
 
-  return fileNames.map((fileName) => {
-    return {
-      params: {
-        slug: fileName.replace(/\.md$/, ''),
-      },
-    };
-  });
+  return fileNames.map((fileName) => ({
+    slug: fileName.replace(/\.md$/, ''),
+  }));
 }
 
 interface MyGrayMatterFile extends Omit<matter.GrayMatterFile<string>, 'data'> {
