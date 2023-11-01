@@ -25,9 +25,10 @@ COPY ./ /app
 ## devcontainer.jsonの作成
 `.devcontainer/devcontainer.json`を作成する。
 - Copilotのextensionをインストールする
-- GitHub CLIをインストールする
+- Dev Container Featuresを使ってGitHub CLIをインストールする
+    - https://containers.dev/features
 
-```json:devcontainer.json
+```json
 {
     "name": "Existing Dockerfile",
     "build": {
@@ -55,6 +56,8 @@ GitHub CLIの認証を行う。`gh auth login`を実行するとブラウザが�
 ```bash
 $ gh auth login
 ```
+
+SSHでの認証を行う。
 
 ## GitHubリポジトリのpull
 GitHub CLIを使ってリポジトリをpullする。`gh repo clone`を実行するとリポジトリをpullすることができる。
