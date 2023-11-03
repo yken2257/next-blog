@@ -112,23 +112,27 @@ Congratulations! You are now logged in. In order to deploy something, run `verce
 $ npx create-next-app@latest
 ```
 
-### Vercel CLIを用いてVercelプロジェクトを作成
+### Vercel CLIを用いて一旦デプロイ
 
 ```bash
-$ vercel project add sample-vercel-project-by-cli
+$ vercel
 Vercel CLI 32.5.0
-> Success! Project sample-vercel-project-by-cli added (your-username) [332ms]
-```
-
-### 作成したVercelプロジェクトに紐付け
-
-```bash
-$ vercel link
-Vercel CLI 32.5.0
-? Set up “/workspaces/sample-vercel-project-by-cli”? [Y/n] y
-? Which scope should contain your project? your-username
-? Found project “your-username/sample-vercel-project-by-cli”. Link to it? [Y/n] y
-✅  Linked to your-username/sample-vercel-project-by-cli (created .vercel)
+? Set up and deploy “/workspaces/projectname”? [Y/n] y
+? Which scope do you want to deploy to? yken2257
+? Link to existing project? [y/N] n
+? What’s your project’s name? projectname
+? In which directory is your code located? ./
+Local settings detected in vercel.json:
+Auto-detected Project Settings (Next.js):
+- Build Command: next build
+- Development Command: next dev --port $PORT
+- Install Command: `yarn install`, `pnpm install`, `npm install`, or `bun install`
+- Output Directory: Next.js default
+? Want to modify these settings? [y/N] n
+🔍  Inspect: https://vercel.com/username/projectname/xxxxxxxxxxxxx [4s]
+✅  Preview: https://projectpreviewname.vercel.app [4s]
+📝  Deployed to production. Run `vercel --prod` to overwrite later (https://vercel.link/2F).
+💡  To change the domain or build command, go to https://vercel.com/username/projectname/settings
 ```
 
 ### 環境変数の設定（もしあれば）
@@ -157,15 +161,13 @@ Vercel CLI 32.5.0
 $ vercel git connect
 ```
 
-### デプロイ
+### アプリケーションを編集して、デプロイ
 
 ```bash
-$ vercel
+$ vercel --prod
 Vercel CLI 32.5.0
-🔍  Inspect: https://vercel.com/username/projectname/xxxxxxxxxxxxx [4s]
-✅  Preview: https://projectpreviewname.vercel.app [4s]
-📝  Deployed to production. Run `vercel --prod` to overwrite later (https://vercel.link/2F).
-💡  To change the domain or build command, go to https://vercel.com/username/projectname/settings
+🔍  Inspect: https://vercel.com/username/projectname/xxxxxxxxxxxxx [1s]
+✅  Production: https://projectpreviewname.vercel.app [1s]
 ```
 
-あるいは、GitHubリポジトリと連携済みなら普通にコミットしても良い。
+あるいは、GitHubリポジトリと連携済みなら普通にコミットすれば良い。
