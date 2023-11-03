@@ -87,21 +87,27 @@ COPY ./ /app
 
 ### devcontainer.jsonの作成
 `.devcontainer/devcontainer.json`を作成する。
-- Copilotのextensionをインストールする
+- Copilotのextensionをインストールしている
+- Dev Container Featuresを使ってGitHub CLI、Vercel CLIをインストールしている
+  - https://containers.dev/features
 
 ```json
 {
-    "name": "Existing Dockerfile",
-    "build": {
-        "dockerfile": "Dockerfile"
-    },
-    "customizations": {
-        "vscode": {
-            "extensions": [
-                "GitHub.copilot"
-            ]
-        }
+  "name": "Existing Dockerfile",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "GitHub.copilot"
+      ]
     }
+  },
+	"features": {
+		"ghcr.io/devcontainers/features/github-cli:1": {},
+		"ghcr.io/devcontainers-contrib/features/vercel-cli:1": {}
+	}
 }
 ```
 
