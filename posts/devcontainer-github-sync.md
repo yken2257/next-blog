@@ -78,7 +78,7 @@ gh repo clone user-name/repository-name
 Node.jsの開発環境を構築するDockerfileを作成する。これはNode.jsのバージョン18を指定した最小限の設定。
 
 ```dockerfile
-FROM node:18
+FROM node:18-bullseye-slim
 WORKDIR /app
 COPY ./package.json /app
 RUN npm install
