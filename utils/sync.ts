@@ -7,6 +7,15 @@ import algoliasearch from 'algoliasearch';
 
 const postsDirectory = path.join(process.cwd(), 'posts');
 
+const algolia = algoliasearch(
+  process.env.NEXT_PUBLIC_ALGOLIA_APPLICATION_ID + '',
+  process.env.ALGOLIA_ADMIN_API_KEY + '',
+)
+
+const index = algolia.initIndex(
+  process.env.NEXT_PUBLIC_ALGOLIA_PRIMARY_INDEX + '',
+)
+
 export async function getRawContentsForAlgolia() {
   const fileNames = fs.readdirSync(postsDirectory);
   const indexData: algoliaIndexData[] = fileNames.map((fileName) => {
@@ -34,6 +43,11 @@ async function syncAlgolia() {
   // const data = await response.text();
   // console.log(data);
 
+  try {
+    await index.saveObjects(res);
+  } catch (e) {
+    console.log(e);
+  }
 }
 
 syncAlgolia();
