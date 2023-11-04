@@ -48,7 +48,7 @@ async function syncAlgolia() {
   } catch (e) {
     console.log(e);
   }
-  console.log(process.env.ALGOLIA_ADMIN_API_KEY);
+  console.log(process.env.NEXT_PUBLIC_ALGOLIA_APPLICATION_ID);
 }
 
 syncAlgolia();
