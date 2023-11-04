@@ -21,6 +21,10 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - run: npm ci
     - name: Create .env file
+      env:
+        NEXT_PUBLIC_ALGOLIA_APPLICATION_ID: ${{ secrets.NEXT_PUBLIC_ALGOLIA_APPLICATION_ID }}
+        ALGOLIA_ADMIN_KEY: ${{ secrets.ALGOLIA_ADMIN_KEY }}
+        NEXT_PUBLIC_ALGOLIA_PRIMARY_INDEX: ${{ secrets.NEXT_PUBLIC_ALGOLIA_PRIMARY_INDEX }}
       run: |
         echo "NEXT_PUBLIC_ALGOLIA_APPLICATION_ID=${{ secrets.NEXT_PUBLIC_ALGOLIA_APPLICATION_ID }}" >> .env
         echo "ALGOLIA_ADMIN_KEY=${{ secrets.ALGOLIA_ADMIN_KEY }}" >> .env
