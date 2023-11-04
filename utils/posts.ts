@@ -12,13 +12,23 @@ import rehypeKatex from 'rehype-katex';
 import rehypeSlug from 'rehype-slug';
 import remarkToc from 'remark-toc';
 // import { toc, Options } from 'mdast-util-toc';
-import { PostMetaData, MatterData, PostData } from './types';
+import { PostMetaData, MatterData, PostData, algoliaIndexData } from './types';
 import { fromMarkdown } from 'mdast-util-from-markdown';
 import removeMarkdown from 'remove-markdown'
 import Slugger from 'github-slugger'
 
 const postsDirectory = path.join(process.cwd(), 'posts');
 
+// Return a list of file names (excluding .md) in the posts directory
+export function getAllPostIds() {
+  const fileNames = fs.readdirSync(postsDirectory);
+
+  return fileNames.map((fileName) => ({
+    slug: fileName.replace(/\.md$/, ''),
+  }));
+}
+
+// Return a list of sorted posts data (sorted by date)
 export function getSortedPostsData() {
   // Get file names under /posts
   const fileNames = fs.readdirSync(postsDirectory);
@@ -49,12 +59,24 @@ export function getSortedPostsData() {
   });
 }
 
-export function getAllPostIds() {
+// Return a list of raw text data
+export async function getRawContentsForAlgolia() {
   const fileNames = fs.readdirSync(postsDirectory);
+  const indexData: algoliaIndexData[] = fileNames.map((fileName) => {
+    const slug = fileName.replace(/\.md$/, '');
+    const fullPath = path.join(postsDirectory, fileName);
+    const fileContents = fs.readFileSync(fullPath, 'utf8');
+    const matterResult = matter(fileContents);
 
-  return fileNames.map((fileName) => ({
-    slug: fileName.replace(/\.md$/, ''),
-  }));
+    const rawText = removeMarkdown(matterResult.content);
+    const contentText = rawText.replace(/[\n\t]/g, ' ');
+    return {
+      objectID: slug,
+      content: contentText,
+      ...matterResult.data as MatterData,
+    };
+  });
+  return indexData;
 }
 
 interface MyGrayMatterFile extends Omit<matter.GrayMatterFile<string>, 'data'> {

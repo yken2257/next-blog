@@ -10,6 +10,14 @@ export type PostMetaData = {
   slug: string;
 } & MatterData;
 
+export type algoliaIndexData = {
+  objectID: string;
+  title: string;
+  date: string;
+  description?: string;
+  content: string;
+};
+
 // getPostData の戻り値
 export type PostData = {
   contentHtml: string;

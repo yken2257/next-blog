@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "sync": "./node_modules/.bin/ts-node --project tsconfig.sync.json ./utils/sync.ts",
     "start": "next start",
     "lint": "next lint"
   },
@@ -16,6 +17,7 @@
     "@types/react": "18.2.22",
     "@types/react-dom": "18.2.7",
     "@vercel/analytics": "^1.1.1",
+    "algoliasearch": "^4.20.0",
     "autoprefixer": "10.4.16",
     "clsx": "^2.0.0",
     "date-fns": "^2.30.0",
@@ -50,6 +52,7 @@
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.10",
     "@types/remove-markdown": "^0.3.3",
-    "intersection-observer": "^0.12.2"
+    "intersection-observer": "^0.12.2",
+    "ts-node": "^10.9.1"
   }
 }
