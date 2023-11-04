@@ -22,8 +22,8 @@ jobs:
     - run: npm ci
     - name: Create .env file
       run: |
-        echo "NEXT_PUBLIC_ALGOLIA_APPLICATION_ID=${{ secrets.NEXT_PUBLIC_ALGOLIA_APPLICATION_ID }}" >> .env
         echo "ALGOLIA_ADMIN_API_KEY=${{ secrets.ALGOLIA_ADMIN_API_KEY }}" >> .env
-        echo "NEXT_PUBLIC_ALGOLIA_PRIMARY_INDEX=${{ secrets.NEXT_PUBLIC_ALGOLIA_PRIMARY_INDEX }}" >> .env
+        echo "NEXT_PUBLIC_ALGOLIA_APPLICATION_ID=$NEXT_PUBLIC_ALGOLIA_APPLICATION_ID" >> .env
+        echo "NEXT_PUBLIC_ALGOLIA_PRIMARY_INDEX=$NEXT_PUBLIC_ALGOLIA_PRIMARY_INDEX" >> .env
     - name: Sync Algolia
       run: npm run sync
