@@ -52,6 +52,7 @@
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.10",
     "@types/remove-markdown": "^0.3.3",
+    "dotenv": "^16.3.1",
     "intersection-observer": "^0.12.2",
     "ts-node": "^10.9.1"
   }

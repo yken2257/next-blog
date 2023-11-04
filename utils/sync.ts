@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
+import 'dotenv/config';
 import removeMarkdown from 'remove-markdown'
 import { MatterData, algoliaIndexData } from './types';
 import algoliasearch from 'algoliasearch';
@@ -8,12 +9,13 @@ import algoliasearch from 'algoliasearch';
 const postsDirectory = path.join(process.cwd(), 'posts');
 
 const algolia = algoliasearch(
-  process.env.NEXT_PUBLIC_ALGOLIA_APPLICATION_ID + '',
-  process.env.ALGOLIA_ADMIN_API_KEY + '',
+  process.env.NEXT_PUBLIC_ALGOLIA_APPLICATION_ID as string,
+  process.env.ALGOLIA_ADMIN_API_KEY as string,
 )
 
 const index = algolia.initIndex(
-  process.env.NEXT_PUBLIC_ALGOLIA_PRIMARY_INDEX + '',
+  // "first_index"
+  process.env.NEXT_PUBLIC_ALGOLIA_PRIMARY_INDEX as string,
 )
 
 export async function getRawContentsForAlgolia() {
@@ -39,14 +41,11 @@ async function syncAlgolia() {
   const res = await getRawContentsForAlgolia();
   console.log(res);
 
-  // const response = await fetch('http://example.com');
-  // const data = await response.text();
-  // console.log(data);
-
   try {
     await index.saveObjects(res);
   } catch (e) {
     console.log(e);
+    process.exit(1);
   }
   console.log(process.env.NEXT_PUBLIC_ALGOLIA_APPLICATION_ID);
 }
