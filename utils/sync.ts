@@ -3,7 +3,7 @@ import path from 'path';
 import matter from 'gray-matter';
 import 'dotenv/config';
 import removeMarkdown from 'remove-markdown'
-import { MatterData, algoliaIndexData } from './types';
+import { MatterData, AlgoliaIndexData } from './types';
 import algoliasearch from 'algoliasearch';
 
 const postsDirectory = path.join(process.cwd(), 'posts');
@@ -14,13 +14,12 @@ const algolia = algoliasearch(
 )
 
 const index = algolia.initIndex(
-  // "first_index"
   process.env.NEXT_PUBLIC_ALGOLIA_PRIMARY_INDEX as string,
 )
 
 export async function getRawContentsForAlgolia() {
   const fileNames = fs.readdirSync(postsDirectory);
-  const indexData: algoliaIndexData[] = fileNames.map((fileName) => {
+  const indexData: AlgoliaIndexData[] = fileNames.map((fileName) => {
     const slug = fileName.replace(/\.md$/, '');
     const fullPath = path.join(postsDirectory, fileName);
     const fileContents = fs.readFileSync(fullPath, 'utf8');
@@ -47,7 +46,6 @@ async function syncAlgolia() {
     console.log(e);
     process.exit(1);
   }
-  console.log(process.env.NEXT_PUBLIC_ALGOLIA_APPLICATION_ID);
 }
 
 syncAlgolia();
