@@ -12,7 +12,7 @@ import rehypeKatex from 'rehype-katex';
 import rehypeSlug from 'rehype-slug';
 import remarkToc from 'remark-toc';
 // import { toc, Options } from 'mdast-util-toc';
-import { PostMetaData, MatterData, PostData, algoliaIndexData } from './types';
+import { PostMetaData, MatterData, PostData, AlgoliaIndexData } from './types';
 import { fromMarkdown } from 'mdast-util-from-markdown';
 import removeMarkdown from 'remove-markdown'
 import Slugger from 'github-slugger'
@@ -62,7 +62,7 @@ export function getSortedPostsData() {
 // Return a list of raw text data
 export async function getRawContentsForAlgolia() {
   const fileNames = fs.readdirSync(postsDirectory);
-  const indexData: algoliaIndexData[] = fileNames.map((fileName) => {
+  const indexData: AlgoliaIndexData[] = fileNames.map((fileName) => {
     const slug = fileName.replace(/\.md$/, '');
     const fullPath = path.join(postsDirectory, fileName);
     const fileContents = fs.readFileSync(fullPath, 'utf8');
