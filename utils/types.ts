@@ -1,4 +1,4 @@
-import type { Hit as AlgoliaHit } from 'instantsearch.js/es/types'; // https://github.com/algolia/autocomplete/tree/next/examples/react-instantsearch-hooks#demo
+// import type { Hit as AlgoliaHit } from 'instantsearch.js/es/types'; // https://github.com/algolia/autocomplete/tree/next/examples/react-instantsearch-hooks#demo
 
 // matterResult.data の型
 export type MatterData = {
@@ -26,6 +26,6 @@ export type PostData = {
   contentText?: string;
 } & MatterData;
 
-export type AlgoliaHitProps = {
-  hit: AlgoliaHit<AlgoliaIndexData>;
-};
+// export type AlgoliaHitProps = {
+//   hit: AlgoliaHit<AlgoliaIndexData>;
+// };
