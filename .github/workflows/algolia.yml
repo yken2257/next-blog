@@ -3,7 +3,9 @@ name: Sync Algolia
 on:
   push:
     branches:
-      - main 
+      - main
+    paths:
+      - 'posts/*'
 
 jobs:
   build:
