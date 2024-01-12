@@ -2,18 +2,9 @@
 import Link from 'next/link';
 import algoliasearch from 'algoliasearch/lite';
 import { InstantSearch, SearchBox, Hits } from 'react-instantsearch';
-import type { Hit as AlgoliaHit } from 'instantsearch.js/es/types';
+import type { AlgoliaHitProps } from '@/utils/types';
 
-type HitProps = {
-  hit: AlgoliaHit<{
-    objectID: string;
-    title: string;
-    content: string;
-    date: string;
-  }>;
-};
-
-function Hit({ hit }: HitProps) {
+function Hit({ hit }: AlgoliaHitProps): JSX.Element {
   const url = `/posts/${hit.objectID}`;
   return (
     <div>
