@@ -1,4 +1,5 @@
 import Link from "next/link"
+import Search from "./Search"
 
 export default function Header() {
   return (
@@ -11,6 +12,9 @@ export default function Header() {
           <Link href="/" className="text-white text-lg hover:underline">Home</Link>
           <Link href="/blog" className="text-white text-lg hover:underline">Blog</Link>
         </div> */}
+        <div className="flex space-x-5">
+          <Search />
+        </div>
       </nav>
     </header>
   )
